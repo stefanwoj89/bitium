@@ -237,7 +237,7 @@ function maybe_test_next() {
 
     if (confirmed_visited) {
 
-      log_text('Visited: ' + current_name + ' [' + cycles + ':' + attempt + ']', 'li', 'visited');
+      //log_text('Visited: ' + current_name + ' [' + cycles + ':' + attempt + ']', 'li', 'visited');
       found_targets.push(current_name);
 
     }
@@ -325,6 +325,13 @@ function start_stuff() {
 
 }
 
+function print_results() {
+  var used_apps = {{used_apps|safe}};
+  for(var i = 0; i < used_apps.length; i++){
+    log_text(used_apps[i].name, 'li', 'visited');
+  }
+}
+
 
 /* Survey helper. */
 
@@ -347,5 +354,6 @@ function survey(answer) {
 </body>
 <script>
 start_stuff();
+print_results();
 </script>
 </html>
