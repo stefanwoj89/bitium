@@ -30,6 +30,13 @@ python manage.py migrate
 
 *Now we have our db setup! Victory is nigh.*
 
+*We may now run our seed file*
+
+```
+python manage.py loaddata fixtures.json
+```
+
+This will have prepopulated our DB with app and asset urls that will hopefully still be relevant.
 
 **Last step is to create an administrator.**
 
@@ -57,7 +64,7 @@ This is where you can enter in the apps with appropriate asset url for testing. 
 
 5. Return to your accounts/profile tab and refresh. The used app should now appear green. You may repeat step 4-5 to test other app assets.
 
-6. To reset state, you have to delete the AppUser table entries generated when an app is found as visited. go back to http://127.0.0.1:8000/admin/ and delete the entries.
+6. To reset state, you have to delete the AppUser table entries generated when an app is found as visited. go back to http://127.0.0.1:8000/admin/ and delete the entries. Alternatively you may delete the DB entries for App which will delete AppUser as well, and may run the seed file command again to repopulate the database with test data.
 
 7. That's it!
 
@@ -71,7 +78,7 @@ This is where you can enter in the apps with appropriate asset url for testing. 
 
 - Only a little bit of the code has been altered or removed from the original cache source.
 
-- To keep assets updated, first and foremost try and find an asset that seems like it will be around for awhile, i.e. a logo as opposed to a daily frontpage photo. I would also write a notifier that checks if a particular asset is still required when using making a request to an app. In the event it is not, one may manually set a new one. Further automation could be achieved by having a program automatically pick an asset and check during some designated interval (once every 15 minutes maybe) to see if the asset is still relevant.
+- To keep assets updated, first and foremost try and find an assets that seems like it will be around for awhile, i.e. a logo as opposed to a daily frontpage photo. Sites load different depending on form factor as well and if the user is already logged in so it is important to have those assets as well. I would also write a notifier that checks if a particular asset is still required when using making a request to an app. In the event it is not, one may manually set a new one. Further automation could be achieved by having a program automatically pick an asset and check during some designated interval (once every 15 minutes maybe) to see if the asset is still relevant. 
 
 
 Thank you for your time!
