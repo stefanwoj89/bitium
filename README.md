@@ -30,7 +30,7 @@ python manage.py migrate
 
 *Now we have our db setup! Victory is nigh.*
 
-*We may now run our seed file*
+**We may now run our seed file**
 
 ```
 python manage.py loaddata fixtures.json
