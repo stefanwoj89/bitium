@@ -244,8 +244,8 @@ function maybe_test_next() {
 
     if (confirmed_visited || attempt == MAX_ATTEMPTS * targets[target_off].urls.length) {
 
-      if (!confirmed_visited)
-        log_text('Not visited: ' + current_name + ' [' + cycles + '+]', 'li', 'not_visited');
+      /*(if (!confirmed_visited)
+        log_text('Not visited: ' + current_name + ' [' + cycles + '+]', 'li', 'not_visited');*/
 
       confirmed_visited = false;
       target_off++;
@@ -278,17 +278,21 @@ function maybe_test_next() {
     }
     var csrftoken = Cookies.get('csrftoken');
     var x = new XMLHttpRequest();
-    x.open("POST", "/accounts/profile/");
+    x.open("POST", "/accounts/profile/", true);
     x.setRequestHeader("X-CSRFToken", csrftoken);
     x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     x.setContentType
     x.send(found_targ_string);
-
+    x.onreadystatechange = function() {
+  if (x.readyState == 4 && x.status == 200) {
+      var json_response = JSON.parse(x.responseText);
+      var used_apps = json_response['used_apps_list']; 
+      var unused_apps = json_response['unused_apps_list'];
+      print_results(used_apps, 'visited');
+      print_results(unused_apps, 'not_visited');
+  }
+}
     document.getElementById('status').innerHTML = 'Tested ' + urls + ' individual URLs in ' + (en - st) + ' ms.';
-
-    //document.getElementById('btn').disabled = false;
-
-    document.getElementById('survey').style.display = 'inline';
 
   }
 
@@ -313,8 +317,6 @@ function start_stuff() {
   attempt = 0;
   confirmed_visited = false;
 
-  //document.getElementById('btn').disabled = true;
-
   log_area = document.getElementById('log');
   log_area.innerHTML = '';
 
@@ -325,10 +327,9 @@ function start_stuff() {
 
 }
 
-function print_results() {
-  var used_apps = {{used_apps|safe}};
-  for(var i = 0; i < used_apps.length; i++){
-    log_text(used_apps[i].name, 'li', 'visited');
+function print_results(apps, state) {
+  for(var i = 0; i < apps.length; i++){
+    log_text(apps[i].name, 'li', state);
   }
 }
 
@@ -352,8 +353,17 @@ function survey(answer) {
 
 <div id="log"> </div>
 </body>
+<style>
+.visited {
+  color: green;
+  font-weight: bold;
+}
+
+.not_visited {
+  color: gray;
+}
+</style>
 <script>
 start_stuff();
-print_results();
 </script>
 </html>
