@@ -3,8 +3,10 @@ from models import App
 from models import AppUser
 # Register your models here.
 class AppAdmin(admin.ModelAdmin):
-	pass
+	fields = ('name', 'url')
+
 class AppUserAdmin(admin.ModelAdmin):
-	pass
+	fields = ('app', 'user')
+	
 admin.site.register(App, AppAdmin)
 admin.site.register(AppUser, AppUserAdmin)
