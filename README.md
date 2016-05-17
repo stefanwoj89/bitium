@@ -41,6 +41,7 @@ python manage.py createsuperuser
 ```
 python manage.py runserver
 ```
+## Testing
 
 Now if all went without a hitch you may login, view and alter DB rows via http://127.0.0.1:8000/admin/.
 
@@ -60,7 +61,7 @@ This is where you can enter in the apps with appropriate asset url for testing. 
 
 7. That's it!
 
-Design:
+## Design
 
 - There are two tables, App and AppUser, with AppUser establishing relationships between Apps and Users
 
@@ -69,6 +70,9 @@ Design:
 - The template uses the template engine for populating the initial list of targets when a GET request is called for accounts/profile. The POST ajax request is called once after all targets have been tested. This is for efficiency. Once called, the screen is updated once the ajax call returns with a response. This is done asynchronously.
 
 - Only a little bit of the code has been altered or removed from the original cache source.
+
+- To keep assets updated, first and foremost try and find an asset that seems like it will be around for awhile, i.e. a logo as opposed to a daily frontpage photo. I would also write a notifier that checks if a particular asset is still required when using making a request to an app. In the event it is not, one may manually set a new one. Further automation could be achieved by having a program automatically pick an asset and check during some designated interval (once every 15 minutes maybe) to see if the asset is still relevant.
+
 
 Thank you for your time!
 
