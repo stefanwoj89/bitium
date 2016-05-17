@@ -48,7 +48,7 @@ This is where you can enter in the apps with appropriate asset url for testing. 
 
 1. Login via the admin above and insert app entries with an app name and url of an app asset. 
 
-2. Login normally via http://localhost:8000/accounts/login/. You may use the same login as your admin.
+2. Login normally via http://127.0.0.1:8000/accounts/login/. You may use the same login as your admin.
 
 3. Once logged in, the javascript would have already run as you are now at accounts/profile. Your apps should appear gray in color.
 
@@ -62,13 +62,13 @@ This is where you can enter in the apps with appropriate asset url for testing. 
 
 Design:
 
-	There are two tables, App and AppUser, with AppUser establishing relationships between Apps and Users
+-There are two tables, App and AppUser, with AppUser establishing relationships between Apps and Users
 
-	accounts/profile is an API point that is used for both POST and GET. A lot of the boiler plate code in there is formatting for javascript usage.
+-accounts/profile is an API point that is used for both POST and GET. A lot of the boiler plate code in there is formatting for javascript usage.
 
-	The template uses the template engine for populating the initial list of targets when a GET request is called for accounts/profile. The POST ajax request is called once after all targets have been tested. This is for efficiency. Once called, the screen is updated once the ajax call returns with a response. This is done asynchronously.
+-The template uses the template engine for populating the initial list of targets when a GET request is called for accounts/profile. The POST ajax request is called once after all targets have been tested. This is for efficiency. Once called, the screen is updated once the ajax call returns with a response. This is done asynchronously.
 
-	Only a little bit of the code has been altered or removed from the original cache source.
+-Only a little bit of the code has been altered or removed from the original cache source.
 
 Thank you for your time!
 
