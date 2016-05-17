@@ -1,0 +1,42 @@
+[
+  {
+    "model": "application_check.app",
+    "pk": 1,
+    "fields": {
+      "name": "Google",
+      "url": "https://ssl.gstatic.com/gb/images/i1_1967ca6a.png"
+    }
+  },
+  {
+    "model": "application_check.app",
+    "pk": 2,
+    "fields": {
+      "name": "ign",
+      "url": "http://oystatic.ignimgs.com/src/core/img/widgets/global/page/globhead_dpad_red.png"
+    }
+  },
+  {
+    "model": "application_check.app",
+    "pk": 3,
+    "fields": {
+      "name": "Apple",
+      "url": "http://images.apple.com/ac/flags/1/images/us/16.png"
+    }
+  },
+  {
+    "model": "application_check.app",
+    "pk": 4,
+    "fields": {
+      "name": "Github",
+      "url": "https://assets-cdn.github.com/images/modules/site/home-ill-platform.png?sn"
+    }
+  },
+  {
+    "model": "application_check.app",
+    "pk": 5,
+    "fields": {
+      "name": "imgur",
+      "url": "http://s.imgur.com/images/site-sprite.png?1430420391"
+    }
+  }
+]
