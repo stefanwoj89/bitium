@@ -267,6 +267,9 @@ function maybe_test_next() {
   } else {
 
     en = (new Date()).getTime();
+    /*
+      Format a post string of the app names we have visited
+    */
     var found_targ_string = "names=";
     for(var i=0; i< found_targets.length; i++){
       if (i == 0){
@@ -276,6 +279,11 @@ function maybe_test_next() {
         found_targ_string += ',' + found_targets[i];
       }
     }
+    /*
+      Get the Django CSRF token (will 403 without it)
+      create an AJAX request with our formatted string 
+      and pass all our visited app names at once.
+    */
     var csrftoken = Cookies.get('csrftoken');
     var x = new XMLHttpRequest();
     x.open("POST", "/accounts/profile/", true);
@@ -283,6 +291,10 @@ function maybe_test_next() {
     x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     x.setContentType
     x.send(found_targ_string);
+
+    /*
+      When the state is finished and has a response, parse response to generate visited and unvisited (used and unused) apps.
+    */
     x.onreadystatechange = function() {
   if (x.readyState == 4 && x.status == 200) {
       var json_response = JSON.parse(x.responseText);
