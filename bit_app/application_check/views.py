@@ -8,6 +8,7 @@ def index(request):
 	app_list = []
 	used_apps_list = []
 	unused_apps_list = []
+
 	if request.method == 'GET':
 
 		apps = App.objects.all()
@@ -17,21 +18,26 @@ def index(request):
 
 	elif request.method == 'POST':
 		
-		app_names = request.POST['names'].split(",")		
+		app_names = request.POST['names'].split(",")
+
+		# format unused apps		
 		unused_apps = App.objects.exclude(name__in=app_names)
 		for unused_app in unused_apps:
 			unused_apps_list.append({'name': unused_app.name})
 
+		# get or create appUser entry in model
 		for app_name in app_names:
 			if app_name == '':
 				continue
 			app = App.objects.get(name=app_name)
 			au = AppUser.objects.get_or_create(app=app, user=request.user)
 
+		# generate and format used apps
 		used_apps = AppUser.objects.filter(user=request.user)
 		for au in used_apps:
 			used_apps_list.append({'name': au.app.name})
-			
+
+		#json response
 		post_response_data = {}
 		post_response_data['used_apps_list'] = used_apps_list;
 		post_response_data['unused_apps_list'] = unused_apps_list;
